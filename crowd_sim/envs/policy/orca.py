@@ -62,7 +62,7 @@ class ORCA(Policy):
         self.max_neighbors = 10
         self.time_horizon = 5
         self.time_horizon_obst = 5
-        self.radius = 0.4
+        self.radius = 0.5
         self.max_speed = 1
         self.sim = None
 
@@ -79,7 +79,7 @@ class ORCA(Policy):
     def set_phase(self, phase):
         return
 
-    def predict(self, state):
+    '''def predict(self, state):
         """
         Create a rvo2 simulation at each time step and run one step
         Python-RVO2 API: https://github.com/sybrenstuvel/Python-RVO2/blob/master/src/rvo2.pyx
@@ -113,6 +113,136 @@ class ORCA(Policy):
         velocity = np.array((self_state.gx - self_state.px, self_state.gy - self_state.py))
         speed = np.linalg.norm(velocity)
         pref_vel = velocity / speed if speed > 1 else velocity
+
+        # Perturb a little to avoid deadlocks due to perfect symmetry.
+        # perturb_angle = np.random.random() * 2 * np.pi
+        # perturb_dist = np.random.random() * 0.01
+        # perturb_vel = np.array((np.cos(perturb_angle), np.sin(perturb_angle))) * perturb_dist
+        # pref_vel += perturb_vel
+
+        self.sim.setAgentPrefVelocity(0, tuple(pref_vel))
+        for i, human_state in enumerate(state.human_states):
+            # unknown goal position of other humans
+            self.sim.setAgentPrefVelocity(i + 1, (0, 0))
+
+        self.sim.doStep()
+        action = ActionXY(*self.sim.getAgentVelocity(0))
+        self.last_state = state
+
+        return action'''
+        
+    def predict(self, state):
+        """
+        Create a rvo2 simulation at each time step and run one step
+        Python-RVO2 API: https://github.com/sybrenstuvel/Python-RVO2/blob/master/src/rvo2.pyx
+        How simulation is done in RVO2: https://github.com/sybrenstuvel/Python-RVO2/blob/master/src/Agent.cpp
+
+        Agent doesn't stop moving after it reaches the goal, because once it stops moving, the reciprocal rule is broken
+
+        :param state:
+        :return:
+        """
+        self_state = state.self_state
+        #print(self_state)
+        params = self.neighbor_dist, self.max_neighbors, self.time_horizon, self.time_horizon_obst
+        if self.sim is not None and self.sim.getNumAgents() != len(state.human_states) + 1:
+            del self.sim
+            self.sim = None
+        if self.sim is None:
+            self.sim = rvo2.PyRVOSimulator(self.time_step, params[0],params[1],params[2],params[3], self.radius, self.max_speed)
+            self.sim.addAgent(self_state.position, params[0],params[1],params[2],params[3], self_state.radius + 0.01 + self.safety_space,
+                              self_state.v_pref, self_state.velocity)
+            for human_state in state.human_states:
+                self.sim.addAgent(human_state.position, params[0],params[1],params[2],params[3], human_state.radius + 0.01 + self.safety_space,
+                                  self.max_speed, human_state.velocity)
+
+            #S path
+            import matplotlib.pyplot as plt
+            small_circle_radius = 7
+            big_circle_radius = 13.6
+            angles_lower_circle = np.linspace((1.0/2)*np.pi, (3.0/2)*np.pi)
+
+            lower_small_circle =[]
+            lower_big_circle = []
+            upper_small_circle = []
+            upper_big_circle = []
+
+            min_x = 0   
+            temp = 0
+
+            for i in range(len(angles_lower_circle) - 1):
+                x1 = small_circle_radius*np.cos(angles_lower_circle[i])
+                y1 = small_circle_radius*np.sin(angles_lower_circle[i])
+                x2 = small_circle_radius*np.cos(angles_lower_circle[i+1])
+                y2 = small_circle_radius*np.sin(angles_lower_circle[i+1])
+                lower_small_circle.append([[x1,y1],[x2,y2]])
+                #plt.plot([x1,x2], [y1,y2])
+                self.sim.addObstacle([(x1,y1),(x2,y2)])
+
+                x3 = big_circle_radius*np.cos(angles_lower_circle[i])
+                y3 = big_circle_radius*np.sin(angles_lower_circle[i])
+                x4 = big_circle_radius*np.cos(angles_lower_circle[i+1])
+                y4 = big_circle_radius*np.sin(angles_lower_circle[i+1])
+                lower_big_circle.append([[x3,y3],[x4,y4]])
+                #plt.plot([x3,x4], [y3,y4])
+                self.sim.addObstacle([(x3,y3),(x4,y4)])
+
+                temp = min([x1, x2, x3, x4])
+                min_x = min([temp, min_x])
+
+            upper_circle_center = (0 + lower_big_circle[0][0][0],small_circle_radius + big_circle_radius)
+            angles_upper_circle = np.linspace(-(1.0/2)*np.pi, (1.0/2)*np.pi)
+
+            max_x = 0
+            temp = 0
+
+            for i in range(len(angles_upper_circle) - 1):
+                x5 = small_circle_radius*np.cos(angles_upper_circle[i]) + upper_circle_center[0]
+                y5 = small_circle_radius*np.sin(angles_upper_circle[i]) + upper_circle_center[1]
+                x6 = small_circle_radius*np.cos(angles_upper_circle[i+1]) + upper_circle_center[0]
+                y6 = small_circle_radius*np.sin(angles_upper_circle[i+1]) + upper_circle_center[1]
+                upper_small_circle.append([[x5,y5],[x6,y6]])
+                #plt.plot([x5,x6], [y5,y6])
+                self.sim.addObstacle([(x5,y5),(x6,y6)])
+
+                x7 = big_circle_radius*np.cos(angles_upper_circle[i]) + upper_circle_center[0]
+                y7 = big_circle_radius*np.sin(angles_upper_circle[i]) + upper_circle_center[1]
+                x8 = big_circle_radius*np.cos(angles_upper_circle[i+1]) + upper_circle_center[0]
+                y8 = big_circle_radius*np.sin(angles_upper_circle[i+1]) + upper_circle_center[1]
+                upper_big_circle.append([[x7,y7],[x8,y8]])
+                #plt.plot([x7,x8], [y7,y8])
+                #plt.axis('equal')
+                self.sim.addObstacle([(x7,y7),(x8,y8)])
+
+                temp = max([x5, x6, x7, x8])
+                max_x = max(max_x, temp)
+            
+            self.sim.addObstacle([[lower_small_circle[-1][1][0], lower_small_circle[-1][1][1]], [max_x, lower_small_circle[-1][1][1]]])
+            self.sim.addObstacle([[lower_small_circle[-1][1][0], lower_big_circle[-1][1][1]], [max_x, lower_big_circle[-1][1][1]]])
+            self.sim.addObstacle([[upper_small_circle[-1][1][0], upper_small_circle[-1][1][1]], [min_x, upper_small_circle[-1][1][1]]])
+            self.sim.addObstacle([[upper_small_circle[-1][1][0], upper_big_circle[-1][1][1]], [min_x, upper_big_circle[-1][1][1]]])
+
+            self.sim.addObstacle([[lower_small_circle[0][0][0], lower_small_circle[0][0][1]], [upper_big_circle[0][0][0], upper_big_circle[0][0][1]]])
+            self.sim.addObstacle([[lower_big_circle[0][0][0], lower_big_circle[0][0][1]], [upper_small_circle[0][0][0], upper_small_circle[0][0][1]]])
+
+            self.sim.processObstacles()
+
+        else:
+            self.sim.setAgentPosition(0, self_state.position)
+            self.sim.setAgentVelocity(0, self_state.velocity)
+            for i, human_state in enumerate(state.human_states):
+                self.sim.setAgentPosition(i + 1, human_state.position)
+                self.sim.setAgentVelocity(i + 1, human_state.velocity)
+
+        # Set the preferred velocity to be a vector of unit magnitude (speed) in the direction of the goal.
+        velocity = np.array((self_state.gx - self_state.px, self_state.gy - self_state.py))
+        speed = np.linalg.norm(velocity)
+        human_vmax = 5.56
+        if speed != 0:
+            # human_vmax = np.random.uniform(0, 1.5)
+            pref_vel = human_vmax * (velocity / speed)
+        else:
+            pref_vel = np.array([0,0])
 
         # Perturb a little to avoid deadlocks due to perfect symmetry.
         # perturb_angle = np.random.random() * 2 * np.pi

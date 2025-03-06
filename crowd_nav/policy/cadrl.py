@@ -114,7 +114,7 @@ class CADRL(Policy):
                 next_px = state.px + action.vx * self.time_step
                 next_py = state.py + action.vy * self.time_step
                 next_state = FullState(next_px, next_py, action.vx, action.vy, state.radius,
-                                       state.gx, state.gy, state.v_pref, state.theta)
+                                       state.gx, state.gy, state.v_pref, state.theta, state.min_dist)
             else:
                 next_theta = state.theta + action.r
                 next_vx = action.v * np.cos(next_theta)
@@ -122,7 +122,7 @@ class CADRL(Policy):
                 next_px = state.px + next_vx * self.time_step
                 next_py = state.py + next_vy * self.time_step
                 next_state = FullState(next_px, next_py, next_vx, next_vy, state.radius, state.gx, state.gy,
-                                       state.v_pref, next_theta)
+                                       state.v_pref, next_theta, state.min_dist)
         else:
             raise ValueError('Type error')
 
@@ -144,7 +144,7 @@ class CADRL(Policy):
                 next_px = state.px + action.vx * self.time_step * 2
                 next_py = state.py + action.vy * self.time_step * 2
                 next_state = FullState(next_px, next_py, action.vx, action.vy, state.radius,
-                                       state.gx, state.gy, state.v_pref, state.theta)
+                                       state.gx, state.gy, state.v_pref, state.theta, state.min_dist)
             else:
                 next_theta = state.theta + action.r
                 next_vx = action.v * np.cos(next_theta)
@@ -152,7 +152,7 @@ class CADRL(Policy):
                 next_px = state.px + next_vx * self.time_step * 2
                 next_py = state.py + next_vy * self.time_step * 2
                 next_state = FullState(next_px, next_py, next_vx, next_vy, state.radius, state.gx, state.gy,
-                                       state.v_pref, next_theta)
+                                       state.v_pref, next_theta, state.min_dist)
         else:
             raise ValueError('Type error')
 
@@ -214,7 +214,7 @@ class CADRL(Policy):
         state = self.rotate(state.unsqueeze(0)).squeeze(dim=0)
         return state
 
-    def rotate(self, state):
+    '''def rotate(self, state):
         """
         Transform the coordinate to agent-centric.
         Input state tensor is of size (batch_size, state_length)
@@ -249,4 +249,48 @@ class CADRL(Policy):
         da = torch.norm(torch.cat([(state[:, 0] - state[:, 9]).reshape((batch, -1)), (state[:, 1] - state[:, 10]).
                                   reshape((batch, -1))], dim=1), 2, dim=1, keepdim=True)
         new_state = torch.cat([dg, v_pref, theta, radius, vx, vy, px1, py1, vx1, vy1, radius1, da, radius_sum], dim=1)
+        return new_state'''
+        
+    def rotate(self, state):
+        """
+        Transform the coordinate to agent-centric.  x axis: position -> goal
+        Input state tensor is of size (batch_size, state_length)
+
+        """
+        # 'px', 'py', 'vx', 'vy', 'radius', 'gx', 'gy', 'v_pref', 'theta', min dist to wall 'px1', 'py1', 'vx1', 'vy1', 'radius1', 
+        #  0     1      2     3      4        5     6      7         8            9           10     11     12     13    14
+        #print(state)
+        batch = state.shape[0]
+        dx = (state[:, 5] - state[:, 0]).reshape((batch, -1))  # -1 means calculated automatically
+        dy = (state[:, 6] - state[:, 1]).reshape((batch, -1))
+        #print(dx)
+        #print(dy)
+        rot = torch.atan2(state[:, 6] - state[:, 1], state[:, 5] - state[:, 0])
+        #print(rot)
+        dg = torch.norm(torch.cat([dx, dy], dim=1), 2, dim=1, keepdim=True)
+
+        v_pref = state[:, 7].reshape((batch, -1))
+        vx = (state[:, 2] * torch.cos(rot) - state[:, 3] * torch.sin(rot)).reshape((batch, -1))
+        vy = (state[:, 3] * torch.cos(rot) + state[:, 2] * torch.sin(rot)).reshape((batch, -1))
+
+        radius = state[:, 4].reshape((batch, -1))
+        if self.kinematics == 'unicycle':
+            theta = (state[:, 8] - rot).reshape((batch, -1))
+        else:
+            # set theta to be zero since it's not used
+            theta = torch.zeros_like(v_pref)
+        vx1 = (state[:, 12] * torch.cos(rot) - state[:, 13] * torch.sin(rot)).reshape((batch, -1))
+        vy1 = (state[:, 13] * torch.cos(rot) + state[:, 12] * torch.sin(rot)).reshape((batch, -1))
+        px1 = (state[:, 10] - state[:, 0]) * torch.cos(rot) - (state[:, 11] - state[:, 1]) * torch.sin(rot)
+        px1 = px1.reshape((batch, -1))
+        py1 = (state[:, 11] - state[:, 1]) * torch.cos(rot) + (state[:, 10] - state[:, 0]) * torch.sin(rot)
+        py1 = py1.reshape((batch, -1))
+        radius1 = state[:, 14].reshape((batch, -1))
+        min_distance = state[:, 9].reshape((batch, -1))
+        radius_sum = radius + radius1
+        da = torch.norm(torch.cat([(state[:, 0] - state[:, 10]).reshape((batch, -1)), (state[:, 1] - state[:, 11]).
+                                  reshape((batch, -1))], dim=1), 2, dim=1, keepdim=True)
+        #print('Values: ', dg, v_pref, theta, radius, vx, vy, px1, py1, vx1, vy1, radius1, da, radius_sum)
+        new_state = torch.cat([dg, v_pref, theta, radius, vx, vy, px1, py1, vx1, vy1, radius1, da, radius_sum, min_distance], dim=1)
+        #print('After cat:', new_state)
         return new_state

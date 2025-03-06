@@ -28,7 +28,13 @@ class Collision(object):
 
     def __str__(self):
         return 'Collision'
+    
+class CollisionWall(object):
+    def __init__(self):
+        pass
 
+    def __str__(self):
+        return 'CollisionWall'
 
 class Nothing(object):
     def __init__(self):

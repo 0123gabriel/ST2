@@ -26,6 +26,7 @@ class Agent(object):
         self.vx = None
         self.vy = None
         self.theta = None
+        self.min_dist = None
         self.time_step = None
 
     def print_info(self):
@@ -41,10 +42,19 @@ class Agent(object):
         Sample agent radius and v_pref attribute from certain distribution
         :return:
         """
-        self.v_pref = np.random.uniform(0.5, 1.5)
-        self.radius = np.random.uniform(0.3, 0.5)
+        self.v_pref = np.random.choice([4.0, 4.5, 5.0, 5.56])
+        self.radius = 0.5
+        #self.v_pref = np.random.uniform(0.5, 1.5)
+        #self.radius = np.random.uniform(0.3, 0.5)
+        
+    def random_radius(self):
+        """
+        Sample agent radius and v_pref attribute from certain distribution
+        :return:
+        """
+        self.radius = 0.5 #np.random.uniform(0.9, 1.2)
 
-    def set(self, px, py, gx, gy, vx, vy, theta, radius=None, v_pref=None):
+    def set(self, px, py, gx, gy, vx, vy, theta, min_dist=None, radius=None, v_pref=None):
         self.px = px
         self.py = py
         self.gx = gx
@@ -52,6 +62,7 @@ class Agent(object):
         self.vx = vx
         self.vy = vy
         self.theta = theta
+        self.min_dist = min_dist
         if radius is not None:
             self.radius = radius
         if v_pref is not None:
@@ -74,7 +85,7 @@ class Agent(object):
         return ObservableState(next_px, next_py, next_vx, next_vy, self.radius)
 
     def get_full_state(self):
-        return FullState(self.px, self.py, self.vx, self.vy, self.radius, self.gx, self.gy, self.v_pref, self.theta)
+        return FullState(self.px, self.py, self.vx, self.vy, self.radius, self.gx, self.gy, self.v_pref, self.theta, self.min_dist)
 
     def get_position(self):
         return self.px, self.py
