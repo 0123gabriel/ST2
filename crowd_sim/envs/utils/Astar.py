@@ -4,8 +4,8 @@ import sys
 import math
 import heapq
 import time
-import env
-from distances import *
+from crowd_sim.envs.utils import env
+from crowd_sim.envs.utils.distances import *
 
 class AStar:
     """AStar set the cost + heuristics as the priority

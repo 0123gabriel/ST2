@@ -72,7 +72,7 @@ class Mlp(nn.Module):
         return x
 
 class Embedding(nn.Module):
-    def __init__(self, joint_state=13, embed_dim=128, dropout=0.1):
+    def __init__(self, joint_state=14, embed_dim=128, dropout=0.1):
         super().__init__()
         self.embedding = nn.Linear(joint_state, embed_dim)
         nn.init.xavier_normal_(self.embedding.weight)
@@ -211,7 +211,7 @@ class Encoder(nn.Module):
 
 class Spatial_Temporal_Transformer(nn.Module):
     def __init__(self,
-                 joint_state=13,
+                 joint_state=14,
                  embed_dim=128,
                  temporal_depth=1,
                  spatial_depth=1,
@@ -246,7 +246,9 @@ class Spatial_Temporal_Transformer(nn.Module):
         self.attention_weights = None
 
     def forward(self, x):
-        x = x.reshape(-1, 3, 5, 13)
+        print('X shape before: ', x.shape)
+        x = x.reshape(-1, 3, 5, 14)
+        print('X shape: ', x.shape)
         b, t, h, w = x.shape
         robot_state = x[:, 2:3, 0, :6].reshape(b, 6)
         # spatial_Transformer

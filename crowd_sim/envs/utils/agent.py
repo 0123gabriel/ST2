@@ -97,6 +97,10 @@ class Agent(object):
     def get_goal_position(self):
         return self.gx, self.gy
 
+    def set_goal_position(self, position):
+        self.gx = position[0]
+        self.gy = position[1]
+
     def get_velocity(self):
         return self.vx, self.vy
 

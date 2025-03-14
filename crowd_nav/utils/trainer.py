@@ -4,6 +4,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 import torch
+import numpy as np
 
 class Trainer(object):
     def __init__(self, model, memory, device, batch_size):
@@ -33,12 +34,17 @@ class Trainer(object):
         for epoch in range(num_epochs):
             epoch_loss = 0
             for data in self.data_loader:
+                print(data[0].shape)
+                print(data[1].shape)
                 inputs, values = data
                 inputs = Variable(inputs)
                 values = Variable(values)
+                print(inputs.shape)
+                print(values.shape)
 
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
+                print(outputs.shape)
                 loss = self.criterion(outputs, values)
                 loss.backward()
                 self.optimizer.step()

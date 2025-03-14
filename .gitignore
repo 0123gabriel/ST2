@@ -1,0 +1,9 @@
+crowd_sim/envs/utils/__pycache__/
+crowd_nav/policy/__pycache__/
+crowd_sim/envs/policy/__pycache__/
+crowd_sim/envs/__pycache__/
+crowd_sim/__pycache__/
+crowd_nav/__pycache__/
+crowd_nav/utils/__pycache__/
+crowd_sim/__init__.pyc
+crowd_sim/envs/__init__.pyc
