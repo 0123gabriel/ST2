@@ -1,10 +1,10 @@
-2025-03-19 12:56:32, INFO: Using device: cuda:0
-2025-03-19 12:56:32, INFO: Policy: st2 w/ global state
-2025-03-19 12:56:32, INFO: human number: 4
-2025-03-19 12:56:32, INFO: Randomize human's radius and preferred speed
-2025-03-19 12:56:32, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
-2025-03-19 12:56:32, INFO: Square width: 10.0, circle width: 8.0
-2025-03-19 12:56:32, INFO: Using model: Spatial_Temporal_Transformer(
+2025-03-19 13:12:23, INFO: Using device: cuda:0
+2025-03-19 13:12:23, INFO: Policy: st2 w/ global state
+2025-03-19 13:12:24, INFO: human number: 4
+2025-03-19 13:12:24, INFO: Randomize human's radius and preferred speed
+2025-03-19 13:12:24, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
+2025-03-19 13:12:24, INFO: Square width: 10.0, circle width: 8.0
+2025-03-19 13:12:24, INFO: Using model: Spatial_Temporal_Transformer(
   (Embedding): Embedding(
     (embedding): Linear(in_features=14, out_features=128, bias=True)
     (dropout): Dropout(p=0.1, inplace=False)
@@ -66,44 +66,42 @@
   (value_Linear_3): Linear(in_features=128, out_features=1, bias=True)
   (softmax): Softmax(dim=-1)
 )
-2025-03-19 12:56:32, INFO: Current learning rate: 0.010000
-2025-03-19 12:56:33, INFO: human number: 4
-2025-03-19 12:56:33, INFO: running 1/4 episode, simulation environment: no
-2025-03-19 12:56:34, INFO: Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: In FT2Font: Can not load face.  Unknown file format.
-2025-03-19 12:56:34, INFO: generated new fontManager
-2025-03-19 12:56:34, INFO: 1/4 episode: Success! Total Reward: 27.458, R_dan: 0.096, R_goal: 10.0, R_col: 0, R_km: 2.39, R_col_wall: 0, R_wall_min_dist: -2.646, R_stop_t: -0.07, R_forward: -0.8, R_way_point_dist: 2.88, R_way_point_dir: 4.346, R_wp: 11.25
-2025-03-19 12:56:34, INFO: Path length: 72.28361996542249
-2025-03-19 12:56:34, INFO: Path left: 0
-2025-03-19 12:56:34, INFO: Actions: 96
-2025-03-19 12:56:34, INFO: Coordinates: -10.545448623597622 31.116396620869637
-2025-03-19 12:56:34, INFO: Stops times: 7
+2025-03-19 13:12:24, INFO: Current learning rate: 0.010000
+2025-03-19 13:12:26, INFO: human number: 4
+2025-03-19 13:12:26, INFO: running 1/4 episode, simulation environment: no
+2025-03-19 13:12:26, INFO: 1/4 episode: Success! Total Reward: 27.458, R_dan: 0.096, R_goal: 10.0, R_col: 0, R_km: 2.39, R_col_wall: 0, R_wall_min_dist: -2.646, R_stop_t: -0.07, R_forward: -0.8, R_way_point_dist: 2.88, R_way_point_dir: 4.346, R_wp: 11.25
+2025-03-19 13:12:26, INFO: Path length: 72.28361996542249
+2025-03-19 13:12:26, INFO: Path left: 0
+2025-03-19 13:12:26, INFO: Actions: 96
+2025-03-19 13:12:26, INFO: Coordinates: -10.545448623597622 31.116396620869637
+2025-03-19 13:12:26, INFO: Stops times: 7
 
-2025-03-19 12:56:36, INFO: human number: 4
-2025-03-19 12:56:36, INFO: running 2/4 episode, simulation environment: circle_crossing
-2025-03-19 12:56:37, INFO: 2/4 episode: Collision! Total Reward: 5.679, R_dan: 0.045, R_goal: 0, R_col: -0.25, R_km: 1.35, R_col_wall: 0, R_wall_min_dist: 0.111, R_stop_t: 0, R_forward: -0.45, R_way_point_dist: 1.35, R_way_point_dir: 2.023, R_wp: 1.5
-2025-03-19 12:56:37, INFO: Path length: 24.665882895474706
-2025-03-19 12:56:37, INFO: Path left: 51.62786471232264
-2025-03-19 12:56:37, INFO: Actions: 45
-2025-03-19 12:56:37, INFO: Coordinates: -7.5477208606898785 1.892344854772091
-2025-03-19 12:56:37, INFO: Stops times: 0
+2025-03-19 13:12:27, INFO: human number: 4
+2025-03-19 13:12:28, INFO: running 2/4 episode, simulation environment: circle_crossing
+2025-03-19 13:12:28, INFO: 2/4 episode: Success! Total Reward: 34.143, R_dan: 0.128, R_goal: 10.0, R_col: 0, R_km: 3.84, R_col_wall: 0, R_wall_min_dist: 0.318, R_stop_t: 0, R_forward: -1.14, R_way_point_dist: 3.84, R_way_point_dir: 5.923, R_wp: 11.25
+2025-03-19 13:12:28, INFO: Path length: 75.58016931534026
+2025-03-19 13:12:28, INFO: Path left: 0
+2025-03-19 13:12:28, INFO: Actions: 128
+2025-03-19 13:12:28, INFO: Coordinates: -8.8662383351475 30.767272133380175
+2025-03-19 13:12:28, INFO: Stops times: 0
 
-2025-03-19 12:56:38, INFO: human number: 4
-2025-03-19 12:56:38, INFO: running 3/4 episode, simulation environment: circle_static
-2025-03-19 12:56:38, INFO: 3/4 episode: Collision! Total Reward: 7.779, R_dan: 0.061, R_goal: 0, R_col: -0.25, R_km: 1.88, R_col_wall: 0, R_wall_min_dist: 0.057, R_stop_t: -0.01, R_forward: -0.65, R_way_point_dist: 1.95, R_way_point_dir: 2.238, R_wp: 2.5
-2025-03-19 12:56:38, INFO: Path length: 28.957622042658986
-2025-03-19 12:56:38, INFO: Path left: 48.87359475187408
-2025-03-19 12:56:38, INFO: Actions: 65
-2025-03-19 12:56:38, INFO: Coordinates: -9.071441397070885 6.390337701886892
-2025-03-19 12:56:38, INFO: Stops times: 1
+2025-03-19 13:12:30, INFO: human number: 4
+2025-03-19 13:12:30, INFO: running 3/4 episode, simulation environment: circle_static
+2025-03-19 13:12:30, INFO: 3/4 episode: Success! Total Reward: 28.738, R_dan: 0.102, R_goal: 10.0, R_col: 0, R_km: 2.82, R_col_wall: 0, R_wall_min_dist: -2.831, R_stop_t: -0.06, R_forward: -0.82, R_way_point_dist: 3.24, R_way_point_dir: 5.021, R_wp: 11.25
+2025-03-19 13:12:30, INFO: Path length: 71.74054633759164
+2025-03-19 13:12:30, INFO: Path left: 0
+2025-03-19 13:12:30, INFO: Actions: 108
+2025-03-19 13:12:30, INFO: Coordinates: -8.765727838966995 30.940901421476156
+2025-03-19 13:12:30, INFO: Stops times: 6
 
-2025-03-19 12:56:40, INFO: human number: 4
-2025-03-19 12:56:40, INFO: running 4/4 episode, simulation environment: no
-2025-03-19 12:56:40, INFO: 4/4 episode: Success! Total Reward: 27.458, R_dan: 0.096, R_goal: 10.0, R_col: 0, R_km: 2.39, R_col_wall: 0, R_wall_min_dist: -2.646, R_stop_t: -0.07, R_forward: -0.8, R_way_point_dist: 2.88, R_way_point_dir: 4.346, R_wp: 11.25
-2025-03-19 12:56:40, INFO: Path length: 72.28361996542249
-2025-03-19 12:56:40, INFO: Path left: 0
-2025-03-19 12:56:40, INFO: Actions: 96
-2025-03-19 12:56:40, INFO: Coordinates: -10.545448623597622 31.116396620869637
-2025-03-19 12:56:40, INFO: Stops times: 7
+2025-03-19 13:12:32, INFO: human number: 4
+2025-03-19 13:12:32, INFO: running 4/4 episode, simulation environment: no
+2025-03-19 13:12:32, INFO: 4/4 episode: Success! Total Reward: 27.458, R_dan: 0.096, R_goal: 10.0, R_col: 0, R_km: 2.39, R_col_wall: 0, R_wall_min_dist: -2.646, R_stop_t: -0.07, R_forward: -0.8, R_way_point_dist: 2.88, R_way_point_dir: 4.346, R_wp: 11.25
+2025-03-19 13:12:32, INFO: Path length: 72.28361996542249
+2025-03-19 13:12:32, INFO: Path left: 0
+2025-03-19 13:12:32, INFO: Actions: 96
+2025-03-19 13:12:32, INFO: Coordinates: -10.545448623597622 31.116396620869637
+2025-03-19 13:12:32, INFO: Stops times: 7
 
-2025-03-19 12:56:40, INFO: TRAIN has success rate: 0.50, collision rate: 0.50, timeout rate: 0.00, collisionwall rate: 0.00, nav time: 24.00, average speed: 3.01, path length: 72.28, total reward: 0.6888
-2025-03-19 12:56:40, INFO: In each scenarios, TRAIN has success rate: 1.00 0.00, collision rate: 0.00 1.00, timeout rate: 0.00 0.00, collisionwall rate: 0.00 0.00, nav time: 24.00 0.00, average speed: 3.01 0.00, path length: 72.28 0.00, total reward: 0.6718 0.7000
+2025-03-19 13:12:32, INFO: TRAIN has success rate: 1.00, collision rate: 0.00, timeout rate: 0.00, collisionwall rate: 0.00, nav time: 26.75, average speed: 2.73, path length: 72.97, total reward: 0.6786
+2025-03-19 13:12:32, INFO: In each scenarios, TRAIN has success rate: 1.00 1.00, collision rate: 0.00 0.00, timeout rate: 0.00 0.00, collisionwall rate: 0.00 0.00, nav time: 24.00 32.00, average speed: 3.01 2.36, path length: 72.28 75.58, total reward: 0.6718 0.6909
