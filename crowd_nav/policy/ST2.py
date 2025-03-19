@@ -249,8 +249,8 @@ class Spatial_Temporal_Transformer(nn.Module):
     def forward(self, x):
         #print('X shape before: ', x.shape)
         x = x.reshape(-1, 3, 4, 14)
-        print('X shape: ', x.shape)
-        print(x[0])
+        #print('X shape: ', x.shape)
+        #print(x[0])
         b, t, h, w = x.shape
         #robot_state = x[:, 2:3, 0, :6].reshape(b, 6)
         robot_state = x[:, 2:3, 0, torch.cat((torch.arange(6), torch.tensor([-1])))].reshape(b, 7)
