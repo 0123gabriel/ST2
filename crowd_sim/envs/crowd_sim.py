@@ -1153,7 +1153,7 @@ class CrowdSim(gym.Env):
             R_km = 0.03
         else:
 	        R_km = -0.04
-        
+         
         if reaching_goal:
             done = True
             info = ReachGoal()
