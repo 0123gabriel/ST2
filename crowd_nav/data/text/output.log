@@ -1,10 +1,10 @@
-2023-05-09 08:18:08, INFO: Using device: cpu
-2023-05-09 08:18:08, INFO: Policy: st2 w/ global state
-2023-05-09 08:18:08, INFO: human number: 5
-2023-05-09 08:18:08, INFO: Not randomize human's radius and preferred speed
-2023-05-09 08:18:08, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
-2023-05-09 08:18:08, INFO: Square width: 10.0, circle width: 4.0
-2023-05-09 08:18:08, INFO: Using model: Spatial_Temporal_Transformer(
+2025-03-19 13:15:22, INFO: Using device: cuda:0
+2025-03-19 13:15:22, INFO: Policy: st2 w/ global state
+2025-03-19 13:15:22, INFO: human number: 5
+2025-03-19 13:15:22, INFO: Not randomize human's radius and preferred speed
+2025-03-19 13:15:22, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
+2025-03-19 13:15:22, INFO: Square width: 10.0, circle width: 4.0
+2025-03-19 13:15:22, INFO: Using model: Spatial_Temporal_Transformer(
   (Embedding): Embedding(
     (embedding): Linear(in_features=13, out_features=128, bias=True)
     (dropout): Dropout(p=0.1, inplace=False)
@@ -25,7 +25,7 @@
         (mlp): Mlp(
           (fc1): Linear(in_features=128, out_features=512, bias=True)
           (fc2): Linear(in_features=512, out_features=128, bias=True)
-          (act): GELU()
+          (act): GELU(approximate='none')
           (dropout1): Dropout(p=0.1, inplace=False)
           (dropout2): Dropout(p=0.1, inplace=False)
         )
@@ -50,7 +50,7 @@
         (mlp): Mlp(
           (fc1): Linear(in_features=128, out_features=512, bias=True)
           (fc2): Linear(in_features=512, out_features=128, bias=True)
-          (act): GELU()
+          (act): GELU(approximate='none')
           (dropout1): Dropout(p=0.1, inplace=False)
           (dropout2): Dropout(p=0.1, inplace=False)
         )
@@ -61,21 +61,10 @@
   )
   (avgpool): AdaptiveAvgPool1d(output_size=1)
   (value_Linear_1): Linear(in_features=134, out_features=256, bias=True)
-  (act): GELU()
+  (act): GELU(approximate='none')
   (value_Linear_2): Linear(in_features=256, out_features=128, bias=True)
   (value_Linear_3): Linear(in_features=128, out_features=1, bias=True)
   (softmax): Softmax(dim=-1)
 )
-2023-05-09 08:18:08, INFO: Current learning rate: 0.010000
-2023-05-09 08:18:10, INFO: TRAIN has success rate: 0.94, collision rate: 0.06, nav time: 10.51, total reward: 0.2428
-2023-05-09 08:18:18, INFO: Finish imitation learning. Weights saved.
-2023-05-09 08:18:18, INFO: Experience set size: 4082/100000
-2023-05-09 08:18:18, INFO: Agent is visible and has holonomic kinematic constraint
-2023-05-09 08:18:18, INFO: Current learning rate: 0.005000
-2023-05-09 08:18:20, INFO: VAL   in episode 0 has success rate: 0.00, collision rate: 1.00, nav time: 25.00, total reward: -0.2669
-2023-05-09 08:18:20, INFO: Frequency of being in danger: 0.47 and average min separate distance in danger: 0.06
-2023-05-09 08:18:22, INFO: TRAIN in episode 0 has success rate: 0.00, collision rate: 1.00, nav time: 25.00, total reward: -0.1260
-2023-05-09 08:18:26, INFO: TRAIN in episode 1 has success rate: 0.00, collision rate: 1.00, nav time: 25.00, total reward: -0.1374
-2023-05-09 08:18:30, INFO: TRAIN in episode 2 has success rate: 0.00, collision rate: 1.00, nav time: 25.00, total reward: -0.1156
-2023-05-09 08:18:34, INFO: TRAIN in episode 3 has success rate: 0.00, collision rate: 1.00, nav time: 25.00, total reward: -0.1383
-2023-05-09 08:18:41, INFO: TRAIN in episode 4 has success rate: 1.00, collision rate: 0.00, nav time: 21.00, total reward: 0.0898
+2025-03-19 13:15:22, INFO: Current learning rate: 0.010000
+2025-03-19 13:15:25, INFO: TRAIN has success rate: 0.94, collision rate: 0.06, nav time: 10.51, total reward: 0.2428

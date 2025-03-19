@@ -1,0 +1,11 @@
+crowd_nav/__pycache__/
+crowd_nav/utils/__pycache__/
+crowd_nav/policy/__pycache__/
+
+crowd_sim/__pycache__/
+crowd_sim/envs/utils/__pycache__/
+crowd_sim/envs/policy/__pycache__/
+crowd_sim/envs/__pycache__/__init__.cpython-37.pyc
+crowd_sim/envs/__pycache__/crowd_sim.cpython-37.pyc
+
+crowdnav.egg-info/
