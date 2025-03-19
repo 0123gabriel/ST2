@@ -1,10 +1,10 @@
-2025-03-19 13:21:52, INFO: Using device: cuda:0
-2025-03-19 13:21:52, INFO: Policy: st2 w/ global state
-2025-03-19 13:21:52, INFO: human number: 5
-2025-03-19 13:21:52, INFO: Not randomize human's radius and preferred speed
-2025-03-19 13:21:52, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
-2025-03-19 13:21:52, INFO: Square width: 10.0, circle width: 4.0
-2025-03-19 13:21:52, INFO: Using model: Spatial_Temporal_Transformer(
+2025-03-19 13:30:29, INFO: Using device: cuda:0
+2025-03-19 13:30:29, INFO: Policy: st2 w/ global state
+2025-03-19 13:30:29, INFO: human number: 4
+2025-03-19 13:30:29, INFO: Not randomize human's radius and preferred speed
+2025-03-19 13:30:29, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
+2025-03-19 13:30:29, INFO: Square width: 10.0, circle width: 4.0
+2025-03-19 13:30:29, INFO: Using model: Spatial_Temporal_Transformer(
   (Embedding): Embedding(
     (embedding): Linear(in_features=13, out_features=128, bias=True)
     (dropout): Dropout(p=0.1, inplace=False)
@@ -66,5 +66,5 @@
   (value_Linear_3): Linear(in_features=128, out_features=1, bias=True)
   (softmax): Softmax(dim=-1)
 )
-2025-03-19 13:21:52, INFO: Current learning rate: 0.010000
-2025-03-19 13:21:55, INFO: TRAIN has success rate: 0.94, collision rate: 0.06, nav time: 10.51, total reward: 0.2428
+2025-03-19 13:30:29, INFO: Current learning rate: 0.010000
+2025-03-19 13:30:32, INFO: TRAIN has success rate: 0.95, collision rate: 0.05, nav time: 10.82, total reward: 0.2427

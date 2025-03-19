@@ -246,7 +246,13 @@ class Spatial_Temporal_Transformer(nn.Module):
         self.attention_weights = None
 
     def forward(self, x):
+        print('Before')
+        #print(x)
+        print(x.shape)
         x = x.reshape(-1, 3, 5, 13)
+        print('After')
+        #print(x)
+        print(x.shape)
         b, t, h, w = x.shape
         robot_state = x[:, 2:3, 0, :6].reshape(b, 6)
         # spatial_Transformer
