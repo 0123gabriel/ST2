@@ -258,7 +258,7 @@ class CADRL(Policy):
 
         """
         # 'px', 'py', 'vx', 'vy', 'radius', 'gx', 'gy', 'v_pref', 'theta', min dist to wall 'px1', 'py1', 'vx1', 'vy1', 'radius1', 
-        #  0     1      2     3      4        5     6      7         8            9           10     11     12     13    14
+        #  0     1      2     3      4        5     6      7         8            9           10     11     12     13       14
         #print(state)
         batch = state.shape[0]
         dx = (state[:, 5] - state[:, 0]).reshape((batch, -1))  # -1 means calculated automatically

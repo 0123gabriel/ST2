@@ -238,7 +238,8 @@ class Spatial_Temporal_Transformer(nn.Module):
                                        dropout,
                                        attention_dropout)
         self.avgpool = nn.AdaptiveAvgPool1d(1)
-        self.value_Linear_1 = nn.Linear(134, 256)
+        #self.value_Linear_1 = nn.Linear(134, 256)
+        self.value_Linear_1 = nn.Linear(135, 256)
         self.act = nn.GELU()
         self.value_Linear_2 = nn.Linear(256, 128)
         self.value_Linear_3 = nn.Linear(128, 1)
@@ -246,11 +247,13 @@ class Spatial_Temporal_Transformer(nn.Module):
         self.attention_weights = None
 
     def forward(self, x):
-        print('X shape before: ', x.shape)
-        x = x.reshape(-1, 3, 5, 14)
+        #print('X shape before: ', x.shape)
+        x = x.reshape(-1, 3, 4, 14)
         print('X shape: ', x.shape)
+        print(x[0])
         b, t, h, w = x.shape
-        robot_state = x[:, 2:3, 0, :6].reshape(b, 6)
+        #robot_state = x[:, 2:3, 0, :6].reshape(b, 6)
+        robot_state = x[:, 2:3, 0, torch.cat((torch.arange(6), torch.tensor([-1])))].reshape(b, 7)
         # spatial_Transformer
         x = x.reshape(-1, h, w)
         spatial_state = self.Embedding(x)

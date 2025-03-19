@@ -34,17 +34,17 @@ class Trainer(object):
         for epoch in range(num_epochs):
             epoch_loss = 0
             for data in self.data_loader:
-                print(data[0].shape)
-                print(data[1].shape)
+                #print(data[0].shape)
+                #print(data[1].shape)
                 inputs, values = data
                 inputs = Variable(inputs)
                 values = Variable(values)
-                print(inputs.shape)
-                print(values.shape)
+                #print(inputs.shape)
+                #print(values.shape)
 
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
-                print(outputs.shape)
+                #print(outputs.shape)
                 loss = self.criterion(outputs, values)
                 loss.backward()
                 self.optimizer.step()
