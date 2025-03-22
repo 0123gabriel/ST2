@@ -656,11 +656,11 @@ class CrowdSim(gym.Env):
 
             astar = AStar(s_start, s_goal, "euclidean")
             self.short_path, visited = astar.searching()
-            number_of_steps = 10 # 1 Means that the only existing way point is the goal
-            step_len = len(self.short_path)//number_of_steps
+            self.number_of_steps = 40 # 1 Means that the only existing way point is the goal
+            step_len = len(self.short_path)//self.number_of_steps
             self.w_points = []
             
-            for i in range(1, number_of_steps):
+            for i in range(1, self.number_of_steps):
                 self.w_points.append(self.short_path[i*step_len])
 
             self.w_points = self.w_points[::-1]
@@ -1080,15 +1080,17 @@ class CrowdSim(gym.Env):
                 R_stop_t = -0.01
 
 
-        if static_dmin >= self.R_safe and dynamic_dmin >= self.R_min:
-            R_danger = 0.001
-        else:
-            if static_dmin >= self.R_safe and dot_prod < 0:
-                R_danger = 0.001
-            else:
-                R_danger = -0.001
-                #if dynamic_dmin < self.R_min and is_stopped:
-                #    R_stop = 0.1
+        r_danger_r = False
+        if static_dmin <= self.R_safe:
+            R_danger = -0.03
+            r_danger_r = True
+
+        if dynamic_dmin < self.R_min:
+            R_danger = -0.03
+            r_danger_r = True
+
+        if not r_danger_r:
+            R_danger = 0.05
 
         if len(self.w_points) > 1:
             left_path = norm(np.array(self.w_points[0]) - np.array(self.robot.get_position())) - self.robot.radius 
@@ -1127,8 +1129,9 @@ class CrowdSim(gym.Env):
         min_distance = min(d1, d2)
         min_distance -= self.robot.radius
         m_dist = min_distance
-        if min_distance < 0.1:
-            R_wall_min_dist = -0.1
+        r_wall_dist_reward = lambda x : np.exp(x+1.8) - 26.8
+        if min_distance < 1.5:
+            R_wall_min_dist = r_wall_dist_reward(min_distance)/100.0
             min_wall_bool = True
         else:
             R_wall_min_dist = 0.0025
@@ -1136,7 +1139,8 @@ class CrowdSim(gym.Env):
         #R_forward = 0.1/(1 + math.exp(len(self.w_points) - 5)) if len(self.w_points) < 10 else -0.1
         #R_forward = ((1.0/3)*(math.exp(-(1.0/2)*len(self.w_points)) + 3.0) - 0.07)*0.05
     
-        wp_func = lambda x : (1.0/9)*(22.5 - 2.25*x) # 2.25 is the maximum reward when ther is 1 way point left
+        value_per_wp = 0.015
+        wp_func = lambda x : -value_per_wp*(x - self.number_of_steps) # 2.25 is the maximum reward when ther is 1 way point left
         R_wp = wp_func(len(self.w_points)) if self.curr_wp != len(self.w_points) else 0
     
         R_forward = 0
@@ -1149,10 +1153,10 @@ class CrowdSim(gym.Env):
         new_position = np.array(self.robot.compute_position(action, self.time_step))
         position_variation = norm(new_position - self.robot.get_position())
 
-        if position_variation > 0.03:
-            R_km = 0.03
+        if position_variation > 0.2:
+            R_km = 0.05
         else:
-	        R_km = -0.04
+	        R_km = -0.5
          
         if reaching_goal:
             done = True
@@ -1182,10 +1186,10 @@ class CrowdSim(gym.Env):
             info = Nothing()
 
 
-        reward = R_danger + R_goal + R_collision + R_km + R_col_wall + R_wall_min_dist + R_stop_t + R_forward + R_way_point_dist + R_way_point_dir + R_wp
+        reward = R_danger + R_goal + R_collision + R_km + R_col_wall + R_wall_min_dist + R_way_point_dist + R_wp
         reward_values = {"Total Reward": reward,"R_dan": R_danger, "R_goal": R_goal,"R_col": R_collision, "R_km": R_km, "R_col_wall": R_col_wall, \
-                        "R_wall_min_dist": R_wall_min_dist, "R_stop_t": R_stop_t, "R_forward": R_forward, "R_way_point_dist": R_way_point_dist, \
-                        "R_way_point_dir": R_way_point_dir, "R_wp": R_wp}      
+                        "R_wall_min_dist": R_wall_min_dist, "R_way_point_dist": R_way_point_dist, \
+                        "R_wp": R_wp}      
 	
         
         if update:
