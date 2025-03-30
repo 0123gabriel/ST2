@@ -15,14 +15,14 @@ def main():
     parser.add_argument('--plot_sr', default=False, action='store_true')
     parser.add_argument('--plot_cr', default=False, action='store_true')
     parser.add_argument('--plot_time', default=False, action='store_true')
-    parser.add_argument('--plot_reward', default=True, action='store_true')
-    parser.add_argument('--plot_train', default=True, action='store_true')
+    parser.add_argument('--plot_reward', default=False, action='store_true')
+    parser.add_argument('--plot_train', default=False, action='store_true')
     parser.add_argument('--plot_val', default=False, action='store_true')
     parser.add_argument('--window_size', type=int, default=200)
     args = parser.parse_args()
 
     # define the names of the models you want to plot and the longest episodes you want to show
-    models = ['LSTM-RL', 'SARL', 'OM-SARL']
+    models = ['output_4000', 'output_2000']
     max_episodes = 10000
 
     ax1 = ax2 = ax3 = ax4 = None
@@ -35,9 +35,18 @@ def main():
         with open(log_file, 'r') as file:
             log = file.read()
 
-        val_pattern = r"VAL   in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1].\d+), " \
-                      r"collision rate: (?P<cr>[0-1].\d+), nav time: (?P<time>\d+.\d+), " \
-                      r"total reward: (?P<reward>[-+]?\d+.\d+)"
+        # val_pattern = r"VAL   in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1].\d+), " \
+        #               r"collision rate: (?P<cr>[0-1].\d+), nav time: (?P<time>\d+.\d+), " \
+        #               r"total reward: (?P<reward>[-+]?\d+.\d+)"
+        
+        val_pattern = (
+    r"VAL   in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1]\.\d+), "
+    r"collision rate: (?P<cr>[0-1]\.\d+), timeout rate: (?P<tr>[0-1]\.\d+), "
+    r"collisionwall rate: (?P<cwr>[0-1]\.\d+), nav time: (?P<time>\d+\.\d+), "
+    r"average speed: (?P<speed>\d+\.\d+), path length: (?P<path>\d+\.\d+), "
+    r"total reward: (?P<reward>[-+]?\d+\.\d+)"
+)
+
         val_episode = []
         val_sr = []
         val_cr = []
@@ -50,9 +59,16 @@ def main():
             val_time.append(float(r[3]))
             val_reward.append(float(r[4]))
 
-        train_pattern = r"TRAIN in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1].\d+), " \
-                        r"collision rate: (?P<cr>[0-1].\d+), nav time: (?P<time>\d+.\d+), " \
-                        r"total reward: (?P<reward>[-+]?\d+.\d+)"
+        # train_pattern = r"TRAIN in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1].\d+), " \
+        #                 r"collision rate: (?P<cr>[0-1].\d+), nav time: (?P<time>\d+.\d+), " \
+        #                 r"total reward: (?P<reward>[-+]?\d+.\d+)"
+        
+        train_pattern = r"TRAIN in episode (?P<episode>\d+) has success rate: (?P<sr>[0-1]\.\d+), " \
+                r"collision rate: (?P<cr>[0-1]\.\d+), timeout rate: (?P<tr>[0-1]\.\d+), " \
+                r"collisionwall rate: (?P<cwr>[0-1]\.\d+), nav time: (?P<time>\d+\.\d+), " \
+                r"average speed: (?P<speed>\d+\.\d+), path length: (?P<length>\d+\.\d+), " \
+                r"total reward: (?P<reward>[-+]?\d+\.\d+)"
+
         train_episode = []
         train_sr = []
         train_cr = []
@@ -91,6 +107,8 @@ def main():
             ax1.set_xlabel('Episodes')
             ax1.set_ylabel('Success Rate')
             ax1.set_title('Success rate')
+            plt.grid(True)
+            plt.ylim([-0.2, 1.0]) 
 
         # plot time
         if args.plot_time:
@@ -107,6 +125,8 @@ def main():
             ax2.set_xlabel('Episodes')
             ax2.set_ylabel('Time(s)')
             ax2.set_title("Robot's Time to Reach Goal")
+            plt.grid(True)
+            plt.ylim([5, 60]) #5,45
 
         # plot cr
         if args.plot_cr:
@@ -123,6 +143,8 @@ def main():
             ax3.set_xlabel('Episodes')
             ax3.set_ylabel('Collision Rate')
             ax3.set_title('Collision Rate')
+            plt.grid(True)
+            plt.ylim([0, 0.6])
 
         # plot reward
         if args.plot_reward:
@@ -139,6 +161,8 @@ def main():
             ax4.set_xlabel('Episodes')
             ax4.set_ylabel('Reward')
             ax4.set_title('Cumulative Discounted Reward')
+            plt.grid(True)
+            plt.ylim([5, 60]) 
 
     plt.show()
 

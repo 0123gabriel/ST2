@@ -248,7 +248,7 @@ class Spatial_Temporal_Transformer(nn.Module):
 
     def forward(self, x):
         #print('X shape before: ', x.shape)
-        x = x.reshape(-1, 3, 4, 14)
+        x = x.reshape(-1, 3, 8, 14)
         #print('X shape: ', x.shape)
         #print(x[0])
         b, t, h, w = x.shape
@@ -347,7 +347,7 @@ class ST2(MultiHumanRL):
                         continue
 
                 if self.query_env:  #false
-                    next_human_states, reward, done, info = self.env.onestep_lookahead(action)
+                    next_human_states, reward, done, info, _, _, _, _ = self.env.onestep_lookahead(action)
                 else:
                     next_human_states = [self.propagate(human_state, ActionXY(human_state.vx, human_state.vy))
                                        for human_state in state.human_states]
