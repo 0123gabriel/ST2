@@ -885,39 +885,40 @@ class CrowdSim(gym.Env):
         # Distance to the straight road at the bottom
         if next_py <= 0 and next_px >= 0:
             if point_to_segment_dist(self.lower_center[0], -self.small_radius, self.big_radius, -self.small_radius, next_px, next_py) < min_dist or \
-                    point_to_segment_dist(self.lower_center[0], -self.big_radius, self.big_radius, -self.big_radius, next_px, next_py) < min_dist or next_py > -self.small_radius:
+                    point_to_segment_dist(self.lower_center[0], -self.big_radius, self.big_radius, -self.big_radius, next_px, next_py) < min_dist or \
+                        next_py > -self.small_radius or next_py < -self.big_radius or next_px > self.big_radius:
                         collision_wall = True
                         #print("botoom")
                         #print(next_px, next_py)
 
         # Distance to the upper arc
         if next_py > 0 and next_px >= 0:
-            if point_to_arc_dist(self.upper_center[0], self.upper_center[1], self.small_radius, self.upper_circle_angles[0], self.upper_circle_angles[1], next_px, next_py) < min_dist: # or \
-                    #math.sqrt((self.upper_center[0] - next_px)**2 + (self.upper_center[1] - next_py)**2) < self.small_radius:
+            if point_to_arc_dist(self.upper_center[0], self.upper_center[1], self.small_radius, self.upper_circle_angles[0], self.upper_circle_angles[1], next_px, next_py) < min_dist or \
+                    math.sqrt((self.upper_center[0] - next_px)**2 + (self.upper_center[1] - next_py)**2) < self.small_radius:
                         collision_wall = True
-                        print("small upper arc")
-                        print(next_px, next_py)
+                        #print("small upper arc")
+                        #print(next_px, next_py)
 
-            if point_to_arc_dist(self.upper_center[0], self.upper_center[1], self.big_radius, self.upper_circle_angles[0], self.upper_circle_angles[1], next_px, next_py) < min_dist: #or \
-                    #math.sqrt((self.upper_center[0] - next_px)**2 + (self.upper_center[1] - next_py)**2) > self.big_radius:
+            if point_to_arc_dist(self.upper_center[0], self.upper_center[1], self.big_radius, self.upper_circle_angles[0], self.upper_circle_angles[1], next_px, next_py) < min_dist or \
+                    math.sqrt((self.upper_center[0] - next_px)**2 + (self.upper_center[1] - next_py)**2) > self.big_radius:
                         collision_wall = True
-                        print("big upper arc")
+                        #print("big upper arc")
                         #print(point_to_arc_dist(self.upper_center[0], self.upper_center[1], self.big_radius, self.upper_circle_angles[0], self.upper_circle_angles[1], next_px, next_py) < min_dist)
                         #print(math.sqrt((self.upper_center[0] - px)**2 + (self.upper_center[1] - py)**2))
                         #print(self.big_radius)
                         #print(math.sqrt((self.upper_center[0] - px)**2 + (self.upper_center[1] - py)**2) > self.big_radius)
-                        print(next_px, next_py)
+                        #print(next_px, next_py)
 
         # Distance to the lower arc
         if next_py < 21 and next_px < 0:
-            if point_to_arc_dist(self.lower_center[0], self.lower_center[1], self.small_radius, self.lower_circle_angles[0], self.lower_circle_angles[1], next_px, next_py) < min_dist:# or \
-                    #math.sqrt((self.lower_center[0] - next_px)**2 + (self.lower_center[1] - next_py)**2) < self.small_radius:
+            if point_to_arc_dist(self.lower_center[0], self.lower_center[1], self.small_radius, self.lower_circle_angles[0], self.lower_circle_angles[1], next_px, next_py) < min_dist or \
+                    math.sqrt((self.lower_center[0] - next_px)**2 + (self.lower_center[1] - next_py)**2) < self.small_radius:
                         collision_wall = True
                         #print("small lower arc")
                         #print(next_px, next_py)
 
-            if point_to_arc_dist(self.lower_center[0], self.lower_center[1], self.big_radius, self.lower_circle_angles[0], self.lower_circle_angles[1], next_px, next_py) < min_dist:# or \
-                    #math.sqrt((self.upper_center[0] - next_px)**2 + (self.upper_center[1] - next_py)**2) > self.big_radius:
+            if point_to_arc_dist(self.lower_center[0], self.lower_center[1], self.big_radius, self.lower_circle_angles[0], self.lower_circle_angles[1], next_px, next_py) < min_dist or \
+                    math.sqrt((self.lower_center[0] - next_px)**2 + (self.lower_center[1] - next_py)**2) > self.big_radius:
                         collision_wall = True
                         #print("big lower arc")
                         #print(next_px, next_py)
