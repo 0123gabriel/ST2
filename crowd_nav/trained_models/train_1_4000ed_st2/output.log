@@ -294,3 +294,29 @@
 
 2025-03-31 01:16:35, INFO: human number: 8
 2025-03-31 01:16:36, INFO: running 26/3600 episode, simulation environment: circle_crossing
+2025-03-31 01:16:37, INFO: 26/3600 episode: Success! Total Reward: 32.308, R_dan: 6.86, R_goal: 10.0, R_col: 0, R_km: 4.9, R_col_wall: 0, R_wall_min_dist: -5.148, R_way_point_dist: 3.98, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:37, INFO: Path length: 79.20960531631356
+2025-03-31 01:16:37, INFO: Path left: 0
+2025-03-31 01:16:37, INFO: Actions: 142
+2025-03-31 01:16:37, INFO: Coordinates: -8.448020389303565 30.497480679303408
+2025-03-31 01:16:37, INFO: Stops times: 1
+
+2025-03-31 01:16:39, INFO: human number: 8
+2025-03-31 01:16:39, INFO: running 27/3600 episode, simulation environment: circle_static
+2025-03-31 01:16:40, INFO: 27/3600 episode: Success! Total Reward: 29.156, R_dan: 7.34, R_goal: 10.0, R_col: 0, R_km: 2.4, R_col_wall: 0, R_wall_min_dist: -6.693, R_way_point_dist: 4.39, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:40, INFO: Path length: 79.45594558151666
+2025-03-31 01:16:40, INFO: Path left: 0
+2025-03-31 01:16:40, INFO: Actions: 158
+2025-03-31 01:16:40, INFO: Coordinates: -9.419218655209988 31.395652828272432
+2025-03-31 01:16:40, INFO: Stops times: 2
+
+2025-03-31 01:16:42, INFO: human number: 8
+2025-03-31 01:16:42, INFO: running 28/3600 episode, simulation environment: no
+2025-03-31 01:16:42, INFO: 28/3600 episode: Success! Total Reward: 20.56, R_dan: 4.9, R_goal: 10.0, R_col: 0, R_km: 3.25, R_col_wall: 0, R_wall_min_dist: -12.228, R_way_point_dist: 2.94, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:42, INFO: Path length: 72.2339464304474
+2025-03-31 01:16:42, INFO: Path left: 0
+2025-03-31 01:16:42, INFO: Actions: 98
+2025-03-31 01:16:42, INFO: Coordinates: -8.48644938133657 30.50919485837221
+2025-03-31 01:16:42, INFO: Stops times: 3
+
+2025-03-31 01:16:44, INFO: human number: 8
