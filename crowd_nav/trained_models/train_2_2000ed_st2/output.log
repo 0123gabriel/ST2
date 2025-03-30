@@ -1,0 +1,114 @@
+2025-03-31 01:16:21, INFO: Using device: cuda:0
+2025-03-31 01:16:21, INFO: Policy: st2 w/ global state
+2025-03-31 01:16:21, INFO: human number: 8
+2025-03-31 01:16:21, INFO: Randomize human's radius and preferred speed
+2025-03-31 01:16:21, INFO: Training simulation: circle_crossing, test simulation: circle_crossing
+2025-03-31 01:16:21, INFO: Square width: 10.0, circle width: 8.0
+2025-03-31 01:16:21, INFO: Using model: Spatial_Temporal_Transformer(
+  (Embedding): Embedding(
+    (embedding): Linear(in_features=14, out_features=128, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+  (temporal_encoder): Encoder(
+    (layers): ModuleList(
+      (0): EncoderLayer(
+        (attn_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): Linear(in_features=128, out_features=384, bias=True)
+          (out): Linear(in_features=128, out_features=128, bias=True)
+          (attn_dropout): Dropout(p=0.1, inplace=False)
+          (proj_dropout): Dropout(p=0.1, inplace=False)
+          (softmax): Softmax(dim=-1)
+          (avgpool): AdaptiveAvgPool1d(output_size=1)
+        )
+        (mlp_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=128, out_features=512, bias=True)
+          (fc2): Linear(in_features=512, out_features=128, bias=True)
+          (act): GELU(approximate='none')
+          (dropout1): Dropout(p=0.1, inplace=False)
+          (dropout2): Dropout(p=0.1, inplace=False)
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (encoder_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (Spatial_encoder): Encoder(
+    (layers): ModuleList(
+      (0): EncoderLayer(
+        (attn_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): Linear(in_features=128, out_features=384, bias=True)
+          (out): Linear(in_features=128, out_features=128, bias=True)
+          (attn_dropout): Dropout(p=0.1, inplace=False)
+          (proj_dropout): Dropout(p=0.1, inplace=False)
+          (softmax): Softmax(dim=-1)
+          (avgpool): AdaptiveAvgPool1d(output_size=1)
+        )
+        (mlp_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=128, out_features=512, bias=True)
+          (fc2): Linear(in_features=512, out_features=128, bias=True)
+          (act): GELU(approximate='none')
+          (dropout1): Dropout(p=0.1, inplace=False)
+          (dropout2): Dropout(p=0.1, inplace=False)
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (encoder_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (avgpool): AdaptiveAvgPool1d(output_size=1)
+  (value_Linear_1): Linear(in_features=135, out_features=256, bias=True)
+  (act): GELU(approximate='none')
+  (value_Linear_2): Linear(in_features=256, out_features=128, bias=True)
+  (value_Linear_3): Linear(in_features=128, out_features=1, bias=True)
+  (softmax): Softmax(dim=-1)
+)
+2025-03-31 01:16:21, INFO: Current learning rate: 0.010000
+2025-03-31 01:16:24, INFO: human number: 8
+2025-03-31 01:16:24, INFO: running 1/3600 episode, simulation environment: no
+2025-03-31 01:16:24, INFO: 1/3600 episode: Success! Total Reward: 20.56, R_dan: 4.9, R_goal: 10.0, R_col: 0, R_km: 3.25, R_col_wall: 0, R_wall_min_dist: -12.228, R_way_point_dist: 2.94, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:24, INFO: Path length: 72.2339464304474
+2025-03-31 01:16:24, INFO: Path left: 0
+2025-03-31 01:16:24, INFO: Actions: 98
+2025-03-31 01:16:24, INFO: Coordinates: -8.48644938133657 30.50919485837221
+2025-03-31 01:16:24, INFO: Stops times: 3
+
+2025-03-31 01:16:26, INFO: human number: 8
+2025-03-31 01:16:27, INFO: running 2/3600 episode, simulation environment: circle_crossing
+2025-03-31 01:16:28, INFO: 2/3600 episode: Collision! Total Reward: -25.005, R_dan: 0.13, R_goal: 0, R_col: -25.0, R_km: 1.1, R_col_wall: 0, R_wall_min_dist: -3.054, R_way_point_dist: 0.99, R_wp: 0.825, timeout: 0
+2025-03-31 01:16:28, INFO: Path length: 16.46585478565116
+2025-03-31 01:16:28, INFO: Path left: 62.50221986414122
+2025-03-31 01:16:28, INFO: Actions: 33
+2025-03-31 01:16:28, INFO: Coordinates: -6.05337880551815 -5.552927542477846
+2025-03-31 01:16:28, INFO: Stops times: 0
+
+2025-03-31 01:16:30, INFO: human number: 8
+2025-03-31 01:16:30, INFO: running 3/3600 episode, simulation environment: circle_static
+2025-03-31 01:16:31, INFO: 3/3600 episode: Success! Total Reward: 30.492, R_dan: 5.74, R_goal: 10.0, R_col: 0, R_km: 3.65, R_col_wall: 0, R_wall_min_dist: -4.767, R_way_point_dist: 4.15, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:31, INFO: Path length: 79.5489801710917
+2025-03-31 01:16:31, INFO: Path left: 0
+2025-03-31 01:16:31, INFO: Actions: 150
+2025-03-31 01:16:31, INFO: Coordinates: -11.281649352516979 30.69320715777576
+2025-03-31 01:16:31, INFO: Stops times: 0
+
+2025-03-31 01:16:33, INFO: human number: 8
+2025-03-31 01:16:33, INFO: running 4/3600 episode, simulation environment: no
+2025-03-31 01:16:33, INFO: 4/3600 episode: Success! Total Reward: 20.56, R_dan: 4.9, R_goal: 10.0, R_col: 0, R_km: 3.25, R_col_wall: 0, R_wall_min_dist: -12.228, R_way_point_dist: 2.94, R_wp: 11.7, timeout: 0
+2025-03-31 01:16:33, INFO: Path length: 72.2339464304474
+2025-03-31 01:16:33, INFO: Path left: 0
+2025-03-31 01:16:33, INFO: Actions: 98
+2025-03-31 01:16:33, INFO: Coordinates: -8.48644938133657 30.50919485837221
+2025-03-31 01:16:33, INFO: Stops times: 3
+
+2025-03-31 01:16:35, INFO: human number: 8
+2025-03-31 01:16:36, INFO: running 5/3600 episode, simulation environment: circle_crossing
+2025-03-31 01:16:36, INFO: 5/3600 episode: Collision! Total Reward: -23.975, R_dan: 0.45, R_goal: 0, R_col: -25.0, R_km: 0.7, R_col_wall: 0, R_wall_min_dist: -1.297, R_way_point_dist: 0.75, R_wp: 0.42, timeout: 0
+2025-03-31 01:16:36, INFO: Path length: 12.52689381036122
+2025-03-31 01:16:36, INFO: Path left: 67.81175306185766
+2025-03-31 01:16:36, INFO: Actions: 25
+2025-03-31 01:16:36, INFO: Coordinates: -2.3325661458075047 -7.505192965269089
+2025-03-31 01:16:36, INFO: Stops times: 0
+
