@@ -87,13 +87,14 @@ def main():
     policy.set_env(env)
     robot.print_info()
     if args.visualize:
-        ob = env.reset(args.phase, args.test_case)
+        print(args.phase)
+        ob = env.reset(args.test_case, args.phase, args.test_case)
         done = False
         last_pos = np.array(robot.get_position())
         step = 0
         while not done:
             action = robot.act(ob)
-            ob, _, done, info = env.step(action)
+            ob, _, done, info, _, _, _, _ = env.step(action)
             # weights = robot.policy.get_attention_weights()
             # logging.info(weights)
             # attention_scores = [plt.text(-5.5, 5 - 0.5 * i, 'Human {}: {:.3f}'.format(i, weights[i]),

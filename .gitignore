@@ -11,5 +11,7 @@ crowd_sim/envs/__pycache__/crowd_sim.cpython-37.pyc
 crowdnav.egg-info/
 Python-RVO2
 
+*.pyc
+
 
 

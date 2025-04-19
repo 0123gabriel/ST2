@@ -12,14 +12,13 @@ from crowd_nav.utils.memory import ReplayMemory
 from crowd_nav.utils.explorer import Explorer
 from crowd_nav.policy.policy_factory import policy_factory
 
-
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
     parser.add_argument('--env_config', type=str, default='configs/env.config')
     parser.add_argument('--policy', type=str, default='st2')
     parser.add_argument('--policy_config', type=str, default='configs/policy.config')
     parser.add_argument('--train_config', type=str, default='configs/train.config')
-    parser.add_argument('--output_dir', type=str, default='trained_models/train_2_2000ed_st2')
+    parser.add_argument('--output_dir', type=str, default='trained_models/train_3_4000ed_st2')
     parser.add_argument('--weights', type=str)
     parser.add_argument('--resume', default=False, action='store_true')
     parser.add_argument('--gpu', default=False, action='store_true')
