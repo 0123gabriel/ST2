@@ -103,13 +103,14 @@ def main():
             # logging.info(attention_scores)
             last_pos = current_pos
             step += 1
+        
+        logging.debug('Speed: %.2f', np.linalg.norm(current_pos - last_pos) / robot.time_step)
         print(step)
         if args.traj:
             env.render('traj', args.video_file)
         else:
-            env.render('video', args.video_file)
-
-        logging.debug('Speed: %.2f', np.linalg.norm(current_pos - last_pos) / robot.time_step)
+            env.render('video', args.video_file, args.model_dir.split('/')[1], args.test_case, env.global_time)
+        
         if robot.visible and info == 'reach goal':
             human_times = env.get_human_times()
             logging.info('Average time for humans to reach goal: %.2f', sum(human_times) / len(human_times))

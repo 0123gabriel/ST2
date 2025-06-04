@@ -18,7 +18,7 @@ def main():
     parser.add_argument('--policy', type=str, default='st2')
     parser.add_argument('--policy_config', type=str, default='configs/policy.config')
     parser.add_argument('--train_config', type=str, default='configs/train.config')
-    parser.add_argument('--output_dir', type=str, default='trained_models/train_3_4000ed_st2')
+    parser.add_argument('--output_dir', type=str, default='trained_models/train_5_2000ed_st2')
     parser.add_argument('--weights', type=str)
     parser.add_argument('--resume', default=False, action='store_true')
     parser.add_argument('--gpu', default=False, action='store_true')
@@ -165,7 +165,10 @@ def main():
             explorer.update_target_model(model)
 
         if episode != 0 and episode % checkpoint_interval == 0:
-            torch.save(model.state_dict(), rl_weight_file)
+            model_name, ext = rl_weight_file.split('.')
+            model_name = model_name + f'_{episode}'
+            rl_model_file = f'{model_name}.{ext}'
+            torch.save(model.state_dict(), rl_model_file)
 
     # final test
     explorer.run_k_episodes(env.case_size['test'], 'test', episode=episode)

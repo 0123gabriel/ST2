@@ -683,9 +683,9 @@ class CrowdSim(gym.Env):
             #print('Robot: ', self.robot)
             
             if self.case_counter[phase] >= 0:
-                np.random.seed(counter_offset[phase] + self.case_counter[phase]) #training
-                #np.random.seed(counter_offset[phase] + self.case_counter[phase]) #testing in the same scenarios 
-                #random.seed(counter_offset[phase] + self.case_counter[phase]) #testing in the same scenarios
+                #np.random.seed(counter_offset[phase] + self.case_counter[phase]) #training
+                np.random.seed(counter_offset[phase] + self.case_counter[phase]) #testing in the same scenarios 
+                random.seed(counter_offset[phase] + self.case_counter[phase]) #testing in the same scenarios
                 if phase in ['train', 'val']:
                     human_num = self.human_num if self.robot.policy.multiagent_training else 1
                     self.generate_random_human_position(human_num=human_num, rule=self.train_val_sim)
@@ -1482,7 +1482,7 @@ class CrowdSim(gym.Env):
         else:
             raise NotImplementedError'''
             
-    def render(self, mode='human', output_file=None, title=None):
+    def render(self, mode='human', output_file=None, title=None, test_case=None, time_sim=None):
         print('render starts')
         from matplotlib import animation
         import matplotlib.pyplot as plt
@@ -1559,7 +1559,18 @@ class CrowdSim(gym.Env):
             ax.set_aspect('equal')
             ax.set_xlabel('x position (m)', fontsize=16)  # NABIH legend x
             ax.set_ylabel('y position (m)', fontsize=16)  # NABIH legend y
-            ax.set_title(title)
+            
+            plot_title = ''
+            if title is not None:
+                plot_title = plot_title + title
+                
+            if test_case is not None:
+                plot_title = plot_title + ' - Test number: ' + str(test_case)
+
+            if time_sim is not None:
+                plot_title = plot_title + ' - Time: ' + str(time_sim)
+            
+            ax.set_title(plot_title)
             
             ax.add_artist(Wedge((0.0, 20.6), 13.6, -90, 90, width=6.5, color="lightgray"))
             ax.add_artist(Wedge((0.0, 0.0), 13.6, 90, 270, width=6.5, color="lightgray"))

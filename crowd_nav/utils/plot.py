@@ -23,7 +23,7 @@ def main():
 
     # define the names of the models you want to plot and the longest episodes you want to show
     models = ['output_4000', 'output_2000']
-    max_episodes = 10000
+    max_episodes = 20000
 
     ax1 = ax2 = ax3 = ax4 = None
     ax1_legends = []
